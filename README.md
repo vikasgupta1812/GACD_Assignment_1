@@ -1,4 +1,4 @@
-GACD_Assignment_1
+`GACD_Assignment_1`
 =================
 
-Repository for Assignment #1 of Getting and Cleaning Data 
+Repository for Assignment #1 of Getting and Cleaning Data course at Coursera.
