@@ -214,6 +214,31 @@ if (!file.exists(&quot;Dataset.zip&quot;)) {
 }
 </code></pre>
 
+<p>Unzip the file. </p>
+
+<pre><code class="r">unzip(&quot;Dataset.zip&quot;, overwrite = TRUE)
+</code></pre>
+
+<pre><code class="r">`?`(read.csv)
+</code></pre>
+
+<pre><code class="r">`?`(read.csv2)
+</code></pre>
+
+<p>read the file with white-space as delimiter</p>
+
+<pre><code class="r">`?`(read.csv)
+testDataset &lt;- read.csv(&quot;./UCI HAR Dataset/test/X_test.txt&quot;, sep = &quot;&quot;, colClasses = &quot;numeric&quot;, 
+    header = FALSE)
+trainDataset &lt;- read.csv(&quot;./UCI HAR Dataset/train/X_train.txt&quot;, sep = &quot;&quot;, colClasses = &quot;numeric&quot;, 
+    header = FALSE)
+</code></pre>
+
+<p>Merge the two datasets</p>
+
+<pre><code class="r">completeDataset &lt;- rbind(testDataset, trainDataset)
+</code></pre>
+
 </body>
 
 </html>
