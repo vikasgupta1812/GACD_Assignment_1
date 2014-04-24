@@ -47,26 +47,10 @@ unzip("Dataset.zip", overwrite = TRUE)
 ```
 
 
-
-
-
-```r
-`?`(read.csv)
-```
-
-
-
-
-```r
-`?`(read.csv2)
-```
-
-
 read the file with white-space as delimiter
 
 
 ```r
-`?`(read.csv)
 testDataset <- read.csv("./UCI HAR Dataset/test/X_test.txt", sep = "", colClasses = "numeric", 
     header = FALSE)
 trainDataset <- read.csv("./UCI HAR Dataset/train/X_train.txt", sep = "", colClasses = "numeric", 
