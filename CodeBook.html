@@ -239,7 +239,7 @@ trainDataset &lt;- read.csv(&quot;./UCI HAR Dataset/train/X_train.txt&quot;, sep
 <pre><code class="r">featuresVector &lt;- featuresData[, 2]
 </code></pre>
 
-<p>Add header to data.frame. <a href="http://stackoverflow.com/a/14022113/2356016">source</a></p>
+<p>Add header to data.frame. Code referred from <a href="http://stackoverflow.com/a/14022113/2356016">Stack-Overflow</a></p>
 
 <pre><code class="r">colnames(testDataset) &lt;- featuresVector
 colnames(trainDataset) &lt;- featuresVector
@@ -301,12 +301,12 @@ trainDataset &lt;- cbind(trainDataset, activityTrain)
 
 <p>Remove train and test datasets to save some space</p>
 
-<pre><code class="r">rm(&quot;testDataset&quot;, &quot;trainDataset&quot;)
+<pre><code class="r"># rm(&#39;testDataset&#39;, &#39;trainDataset&#39;)
 </code></pre>
 
 <p>Now, lets subset the dataset for mean and std measures only!</p>
 
-<p>Use Grep for identifying the subset measures <a href="http://stackoverflow.com/a/21311458/2356016">inspiration</a></p>
+<p>Use Grep for identifying the subset measures. Code referred from <a href="http://stackoverflow.com/a/21311458/2356016">Stack-Overflow</a></p>
 
 <pre><code class="r">completeDataset &lt;- subset(completeDataset, select = grepl(&quot;mean|std&quot;, featuresVector))
 </code></pre>
@@ -315,6 +315,35 @@ trainDataset &lt;- cbind(trainDataset, activityTrain)
 </code></pre>
 
 <pre><code class="r">write.table(completeDataset, file = &quot;tidyDataset.txt&quot;, sep = &quot;\t&quot;, row.names = FALSE)
+</code></pre>
+
+<pre><code class="r">subjectTest &lt;- read.csv(&quot;./UCI HAR Dataset/test/subject_test.txt&quot;, sep = &quot;&quot;, 
+    header = FALSE)
+subjectTrain &lt;- read.csv(&quot;./UCI HAR Dataset/train/subject_train.txt&quot;, sep = &quot;&quot;, 
+    header = FALSE)
+colnames(subjectTrain) &lt;- &quot;subject&quot;
+colnames(subjectTest) &lt;- &quot;subject&quot;
+</code></pre>
+
+<pre><code class="r">testDataset &lt;- cbind(testDataset, subjectTest)
+trainDataset &lt;- cbind(trainDataset, subjectTrain)
+</code></pre>
+
+<pre><code class="r">completeDataset1 &lt;- rbind(testDataset, trainDataset)
+</code></pre>
+
+<p>Creates a second, independent tidy data set with the average of each variable for each activity and each subject. </p>
+
+<pre><code class="r">tidyDataset2 &lt;- aggregate(completeDataset1[, 1:562], completeDataset1[, 563:564], 
+    FUN = mean)
+</code></pre>
+
+<pre><code class="r"># head(tidyDataset2)
+</code></pre>
+
+<p>Write this tidy dataset</p>
+
+<pre><code class="r">write.table(tidyDataset2, file = &quot;tidyDataset2.txt&quot;, sep = &quot;\t&quot;, row.names = FALSE)
 </code></pre>
 
 </body>

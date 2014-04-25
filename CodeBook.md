@@ -73,7 +73,7 @@ featuresVector <- featuresData[, 2]
 ```
 
 
-Add header to data.frame. [source](http://stackoverflow.com/a/14022113/2356016)
+Add header to data.frame. Code referred from [Stack-Overflow](http://stackoverflow.com/a/14022113/2356016)
 
 
 ```r
@@ -167,14 +167,14 @@ completeDataset <- rbind(testDataset, trainDataset)
 Remove train and test datasets to save some space
 
 ```r
-rm("testDataset", "trainDataset")
+# rm('testDataset', 'trainDataset')
 ```
 
 
 
 Now, lets subset the dataset for mean and std measures only!
 
-Use Grep for identifying the subset measures [inspiration](http://stackoverflow.com/a/21311458/2356016)
+Use Grep for identifying the subset measures. Code referred from [Stack-Overflow](http://stackoverflow.com/a/21311458/2356016)
 
 
 
@@ -199,6 +199,53 @@ write.table(completeDataset, file = "tidyDataset.txt", sep = "\t", row.names = F
 
 
 
+```r
+subjectTest <- read.csv("./UCI HAR Dataset/test/subject_test.txt", sep = "", 
+    header = FALSE)
+subjectTrain <- read.csv("./UCI HAR Dataset/train/subject_train.txt", sep = "", 
+    header = FALSE)
+colnames(subjectTrain) <- "subject"
+colnames(subjectTest) <- "subject"
+```
 
+
+
+
+```r
+testDataset <- cbind(testDataset, subjectTest)
+trainDataset <- cbind(trainDataset, subjectTrain)
+```
+
+
+
+
+```r
+completeDataset1 <- rbind(testDataset, trainDataset)
+```
+
+
+Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
+
+
+
+```r
+tidyDataset2 <- aggregate(completeDataset1[, 1:562], completeDataset1[, 563:564], 
+    FUN = mean)
+```
+
+
+
+
+```r
+# head(tidyDataset2)
+```
+
+
+Write this tidy dataset
+
+
+```r
+write.table(tidyDataset2, file = "tidyDataset2.txt", sep = "\t", row.names = FALSE)
+```
 
 
