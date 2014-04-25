@@ -38,7 +38,7 @@ if(!file.exists("Dataset.zip")) {download.file(fileUrl, destfile="Dataset.zip", 
 Unzip the file. 
 
 ```{r}
-unzip('Dataset.zip', overwrite=TRUE)
+if(!file.exists("UCI HAR Dataset")) {unzip('Dataset.zip', overwrite=TRUE)}
 ```
 
 read the file with white-space as delimiter
@@ -53,3 +53,100 @@ Merge the two datasets
 ```{r}
 completeDataset  <- rbind(testDataset, trainDataset)
 ```
+
+remove train and test datasets to save some space
+```{r}
+rm('testDataset', 'trainDataset')
+```
+
+
+read the features from features.txt
+```{r}
+featuresData  <- read.csv('./UCI HAR Dataset/features.txt', sep="", header=FALSE)
+```
+
+
+```{r}
+featuresVector  <- featuresData[,2]
+```
+
+Add header to data.frame. [source](http://stackoverflow.com/a/14022113/2356016)
+
+```{r}
+colnames(completeDataset)  <- featuresVector
+```
+
+Check if the dataset is displayed correctly
+
+```{r}
+head(completeDataset)
+```
+
+Results Look Good 
+
+Now, lets subset the dataset for mean and std measures only!
+
+Use Grep for identifying the subset measures [inspiration](http://stackoverflow.com/a/21311458/2356016)
+
+```{r}
+grep("mean", featuresVector)
+```
+
+```{r}
+featuresVector[grep("mean", featuresVector)]
+```
+
+```{r}
+length(featuresVector[grep("mean|std", featuresVector)])
+```
+
+```{r}
+requiredFields  <- featuresVector[grep("mean|std", featuresVector)]
+```
+
+Look at the contents of the dataset
+
+```{r}
+requiredFields
+```
+
+
+
+take subset of data based on this requiredFields vector
+
+
+```{r}
+requiredDataset  <- completeDataset[,requiredFields]
+```
+
+see contents of the new dataset
+
+```{r}
+colnames(requiredDataset)
+```
+
+
+
+```{r}
+requiredDataset1  <- subset(completeDataset,select = grepl("mean|std",featuresVector))
+```
+
+see the columnnames for this dataset
+```{r}
+colnames(requiredDataset1)
+```
+
+```{r}
+head(requiredDataset1)
+```
+
+TODO:
+1- add meaningful names to activity codes
+2- add activity names to dataset
+3- write cleandataset
+
+
+
+
+
+
