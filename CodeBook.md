@@ -2132,9 +2132,12 @@ head(requiredDataset1)
 ```
 
 
-TODO:
+**TODO:**
+
 1- add meaningful names to activity codes
+
 2- add activity names to dataset
+
 3- write cleandataset
 
 
